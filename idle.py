@@ -48,11 +48,11 @@ def should_holdoff_idle():
             return True
     return False
      
-def manage_idle_time(stall):
+def manage_idle_time():
     should_reset = should_stall = False
     idle_time = get_idle_time()
     holdoff_idle = should_holdoff_idle()
-    if not (stall or holdoff_idle) and idle_time >= 2 * 60:
+    if not holdoff_idle and idle_time >= 2 * 60:
         start_time = time.time()
         choice = os.system('xmessage -buttons reset:0,stall:2 -center "Idle..."') >> 8
         # when closing the window without choosing an option, xmessage returns 1
@@ -61,8 +61,6 @@ def manage_idle_time(stall):
             should_reset = True
         elif choice == 2: 
             should_stall = True
-    if stall:
-        should_stall = True
     return should_reset, should_stall
 
 

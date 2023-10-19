@@ -25,7 +25,8 @@ while True:
         break_time = time.time() + break_interval
         should_reset = False
 
-    should_reset, should_stall = manage_idle_time(should_stall)
+    if not should_stall:
+        should_reset, should_stall = manage_idle_time()
 
     if not should_reset:
         sleep_t = min(break_time - time.time(), 

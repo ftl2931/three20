@@ -48,7 +48,7 @@ def should_holdoff_idle():
             return True
     return False
      
-def manage_idle_time(stall):
+def manage_idle_time():
     should_reset = should_stall = False
     idle_time = get_idle_time()
     holdoff_idle = should_holdoff_idle()
@@ -61,8 +61,6 @@ def manage_idle_time(stall):
             should_reset = True
         elif choice == 2: 
             should_stall = True
-    if stall:
-        should_stall = True
     return should_reset, should_stall
 
 

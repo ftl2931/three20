@@ -22,6 +22,7 @@ This was designed to work under Ubuntu 20.04. It requires xorg (It does not work
 
 It has the following dependencies:  
 xdotool  
+xmessage  
 xprintidle  
 
 

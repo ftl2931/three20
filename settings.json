@@ -1,0 +1,4 @@
+{
+    "holdoff_processes":["evince"],
+    "holdoff_windows":["VLC"]
+}

@@ -6,15 +6,19 @@ import os
 import time
 
 from utils import popen_and_read
+from conf import read_conf
 
-# The following identify programs which don't require frequent interaction, and consequently may cause reset prompts to appear
-# even though you are still using the computer
+
+# The following lists identify programs that the user commonly runs which don't require frequent interaction, and consequently may 
+# cause reset prompts to appear even though you are still using the computer
+
+settings = read_conf()
 
 # The first list identifies them by process name
-holdoff_processes = ('evince', 'ebook-viewer')
+holdoff_processes = settings['holdoff_processes']
 
 # the second identifies them by strings included in the window title
-holdoff_windows = ('VLC', )
+holdoff_windows = settings['holdoff_windows']
 
 def get_idle_time():
     xpi_output = popen_and_read('xprintidle')
@@ -26,9 +30,9 @@ def get_process_name(pid):
     ps_entries = ps_output.split('\n')
 
     for e in ps_entries:
-        entry_info = e.split(' ')
-        if entry_info[0] == str(pid):
-            return entry_info[1]
+        split_index = e.find(' ')
+        if e[:split_index] == pid:
+            return e[split_index+1:]
 
 def get_active_window_info():
     window_name = popen_and_read('xdotool getactivewindow getwindowname', False)
@@ -37,15 +41,15 @@ def get_active_window_info():
     return window_name, process_name
 
 def should_holdoff_idle():
-    active_window_name, active_window_pid = get_active_window_info()
-    active_window_proc_name = get_process_name(active_window_pid)
-    if active_window_name is None:
+    active_window_title, active_window_process = get_active_window_info()
+    if active_window_process is None:
         print('Failed to get the pid of the process that owns the current active window. You should use a window title if possible.')
-    if active_window_proc_name in holdoff_processes:
+    elif active_window_process in holdoff_processes:
         return True
-    for name in holdoff_windows:
-        if name in active_window_name:
-            return True
+    if active_window_title:
+        for name in holdoff_windows:
+            if name.lower() in active_window_title.lower():
+                return True
     return False
      
 def manage_idle_time():
@@ -62,7 +66,3 @@ def manage_idle_time():
         elif choice == 2: 
             should_stall = True
     return should_reset, should_stall
-
-
-
-

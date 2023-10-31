@@ -12,7 +12,9 @@ Programs of this kind usually have an idle reset feature, triggered after a cert
 This program also includes a reset feature, but it has mechanisms to mitigate this issue.
 Firstly, resets are not automatic. When the user is inactive for more than two minutes, the timer is paused, and a dialog window appears, giving the user the option of resetting the timer. If the user doesn't reset the timer, and simply closes this window, the program resumes and the timer is unaffected; meaning the break prompt appears at the previously expected time. In particular, if the timer was scheduled to prompt for a break at the moment of closing, or before, the prompt will appear immediately after closing the dialog window.
 
-Secondly, to avoid prompting for reset too often, the program defines a list of applications which, when holding the focus (their window is at the top of the system GUI), prevent it. These applications can be specified by process name, or by a phrase included in the window title. Note, however, that for some programs, the process name can't be determined and a window title must be used instead. At present, you can only change the aforementioned list by modifying the code, but I plan to remedy that soon.
+Secondly, to avoid prompting for reset too often, the program defines a list of applications which, when holding the focus (their window is at the top of the system GUI), prevent it. These applications can be specified by process name, or by a phrase included in the window title. Note, however, that for some programs, the process name can't be determined and a window title must be used instead.
+
+These phrases and process names can customised by modifying the settings.json file.
 
 In addition, if you only want to prevent resets for a limited duration, the reset dialog includes a *stall* option. This option prevents resets from occurring until the next break.
 

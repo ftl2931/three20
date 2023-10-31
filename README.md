@@ -14,7 +14,7 @@ Firstly, resets are not automatic. When the user is inactive for more than two m
 
 Secondly, to avoid prompting for reset too often, the program defines a list of applications which, when holding the focus (their window is at the top of the system GUI), prevent it. These applications can be specified by process name, or by a phrase included in the window title. Note, however, that for some programs, the process name can't be determined and a window title must be used instead.
 
-These phrases and process names can customised by modifying the settings.json file.
+These phrases and process names can be customised by modifying the settings.json file.
 
 In addition, if you only want to prevent resets for a limited duration, the reset dialog includes a *stall* option. This option prevents resets from occurring until the next break.
 
